@@ -3,6 +3,14 @@ const express = require("express");
 // app - екземпляр серверу експресса
 const app = express();
 
+const users = [
+  { id: 0, email: "email1@gmail.com", password: "12345admin" },
+  { id: 1, email: "email2@gmail.com", password: "765427hg" },
+  { id: 2, email: "email3@gmail.com", password: "hdsh7" },
+  { id: 3, email: "email4@gmail.com", password: "nbcxmdt8" },
+  { id: 4, email: "email5@gmail.com", password: "1235nfsbns" },
+];
+
 // app містить функції для побудови маршрутів на сервері
 // їх назви відповідають назвам НТТР методів
 // приймають першим аргументом - шлях не сервері
@@ -49,14 +57,8 @@ app.get(
 });
 
 app.get("/users", (request, response) => {
-  response.send([{}, {}, {}])
+  response.send(users);
 });
-
-// app.get();
-// app.post();
-// app.put();
-// app.patch();
-// app.delete();
 
 const PORT = 3000;
 
