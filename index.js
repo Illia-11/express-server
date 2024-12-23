@@ -15,9 +15,37 @@ const app = express();
 // app.delete();
 
 // req та res - обʼєкти запиту та відповіді. 
-app.get("/", (req, res) => {
-  // метод send дозволяє повернути у відповідь стрінгу, обʼєкт, масив, булеве значення без перетворень
-  res.send("Hello, World!")
+app.get(
+  "/",
+  // проміжний обробник запиту (мідлвер)
+  (req, res, next) => {
+    console.log("callback 1");
+    req.data = { id: 5 };
+    // каже, що мідлвер зробив своє діло і можна викликати наступний обробник у ланцюжку
+    next();
+  },
+  // проміжний обробник запиту (мідлвер)
+  (req, res, next) => {
+    console.log("callback 2");
+    console.log(req.data.id); // 5
+    next();
+  },
+  // проміжний обробник запиту (мідлвер)
+  (req, res, next) => {
+    console.log("callback 3");
+
+    const isRequestValid = Math.random() > 0.5;
+    if(isRequestValid) {
+      next();
+    } else {
+      res.send("Invalid data");
+    }
+  },
+  // кінцевий обробник запиту
+  (req, res, next) => {
+    console.log("callback 4");
+    // метод send дозволяє повернути у відповідь стрінгу, обʼєкт, масив, булеве значення без перетворень
+    res.send("Hello, World!")
 });
 
 app.get("/users", (request, response) => {
