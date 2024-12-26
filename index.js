@@ -1,9 +1,9 @@
 const express = require("express");
-const router = require("./routers");
+const rootRouter = require("./routers");
 const app = express();
 
 // підʼєднує до app на всі методи міддлвери (в даному випадку - роутера)
-app.use(router);
+app.use(rootRouter);
 
 const PORT = 3000;
 
