@@ -13,13 +13,26 @@ module.exports.getUser = async (req, res) => {
 }
 
 module.exports.createUser = async (req, res, next) => {
-  const { user } = req;
+  const { user, file } = req;
 
-  const newUser = await User.create(user);
+  /*
+    {
+      "fieldname": "userPic",
+      "originalname": "photo_2024-12-06 16.03.54.jpeg",
+      "encoding": "7bit",
+      "mimetype": "image/jpeg",
+      "destination": "uploads/",
+      "filename": "f973a030aa1bb8a3ac100d45e70eaeef",
+      "path": "uploads/f973a030aa1bb8a3ac100d45e70eaeef",
+      "size": 56304
+    }
+  */
+
+  const newUser = await User.create({...user, avatarName: file.filename});
 
   const { password, ...preparedUser } = newUser;
 
-  res.status(201).send(preparedUser);
+  res.status(201).send({ preparedUser });
 }
 
 module.exports.deleteUser = async (req, res) => {
